@@ -13,8 +13,6 @@ BOT_NAME = 'miner'
 SPIDER_MODULES = ['miner.spiders']
 NEWSPIDER_MODULE = 'miner.spiders'
 
-# Crawl responsibly by identifying yourself (and your website) on the user-agent
-# USER_AGENT = 'miner (+http://www.yourdomain.com)'
 
 DOWNLOADER_MIDDLEWARES = {
     # 'scrapy.contrib.downloadermiddleware.httpproxy.HttpProxyMiddleware': 110,
