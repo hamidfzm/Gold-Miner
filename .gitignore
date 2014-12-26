@@ -1,4 +1,17 @@
+# pycharm projects
 .idea/
+
+# python complied or bullshit files
 *.pyc
+*.py~
 *~
+
+# temp folder
 temp/
+
+# log file and folders
+log/
+*.log
+
+# virtual envirments
+env/
