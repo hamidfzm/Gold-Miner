@@ -7,7 +7,7 @@ from scrapy import log
 
 
 # project import
-from miner.settings import USER_AGENT_LIST
+from settings import USER_AGENT_LIST
 
 
 class RandomUserAgentMiddleware(object):

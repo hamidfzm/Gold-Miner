@@ -5,7 +5,7 @@ from scrapy import signals
 from scrapy.contrib.exporter import JsonItemExporter
 
 # project import
-from miner import items
+import items
 
 # Define your item pipelines here
 #

@@ -2,9 +2,9 @@
 __author__ = 'Hamid FzM'
 
 # python import
-from scrapy import Item, Spider
+from scrapy import Spider
 # project import
-from miner.items import Gold
+from items import Gold
 
 
 class tgjuSpider(Spider):
