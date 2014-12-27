@@ -1,0 +1,3 @@
+# Gold Miner
+
+Project for crawling data from stock websites ...
