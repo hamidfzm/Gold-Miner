@@ -19,6 +19,10 @@ DOWNLOADER_MIDDLEWARES = {
     'miner.middlewares.RandomUserAgentMiddleware': 100,
 }
 
+ITEM_PIPELINES = {
+    'miner.pipelines.tgjuPipeline': 800,
+}
+
 # Got this list from http://www.user-agents.org/
 USER_AGENT_LIST = ('Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.2.3) Gecko/20100401 Firefox/3.6.3 (FM Scene 4.6.1)',
                    'Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.2.3) Gecko/20100401 Firefox/3.6.3 (.NET CLR 3.5.30729) (Prevx 3.0.5)',
