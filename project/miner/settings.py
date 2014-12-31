@@ -12,7 +12,8 @@ BOT_NAME = 'miner'
 
 SPIDER_MODULES = ['miner.spiders']
 NEWSPIDER_MODULE = 'miner.spiders'
-
+# COOKIES_ENABLED = False
+# RANDOMIZE_DOWNLOAD_DELAY = True
 
 DOWNLOADER_MIDDLEWARES = {
     # 'scrapy.contrib.downloadermiddleware.httpproxy.HttpProxyMiddleware': 110,
