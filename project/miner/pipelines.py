@@ -3,6 +3,7 @@
 # python import
 from scrapy import signals
 from scrapy.contrib.exporter import JsonItemExporter
+from datetime import datetime
 
 # project import
 import items
@@ -32,7 +33,11 @@ class tgjuPipeline(object):
 
     def spider_opened(self, spider):
         for key in get_items(items):
-            self.files[key] = open('%s_%s.json' % (spider.name, key), 'w+b')
+            self.files[key] = open('temp/%s_%s_%s.json' % (spider.name,
+                                                           key.lower(),
+                                                           datetime.now().strftime('%Y%m%dT%H%M%S')),
+                                   'w+b')
+
             self.exporter[key] = JsonItemExporter(self.files[key])
             self.exporter[key].start_exporting()
 
