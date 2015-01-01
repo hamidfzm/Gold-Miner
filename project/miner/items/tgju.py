@@ -17,3 +17,17 @@ class Gold(Item):
     min = Field()
     max = Field()
     time = Field()
+
+
+class Coin(Gold):
+    pass
+
+
+class Others(Gold):
+    pass
+
+
+class Market(Item):
+    title = Field()
+    indicator = Field()
+    tolerance = Field()
