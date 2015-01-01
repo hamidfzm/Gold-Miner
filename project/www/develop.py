@@ -1,9 +1,8 @@
 #!/usr/bin/env python
 from app import create_app
-from flask.ext.script import Manager
+from config import DevelopmentConfig
 
-app = create_app('default')
-manager = Manager(app)
+app = create_app(DevelopmentConfig)
 
 if __name__ == '__main__':
-    app.run()
+    app.run(host='0.0.0.0', port=5000)
