@@ -4,7 +4,7 @@ __author__ = 'Hamid FzM'
 # python import
 from scrapy import Spider
 # project import
-from miner.items.tgju import Gold, Coin, Others, Market
+from miner.items.tgju import Gold, Coin, Others, Market, Currency
 
 
 class tgjuSpider(Spider):
@@ -55,3 +55,11 @@ class tgjuSpider(Spider):
             market['indicator'] = data[0]
             market['tolerance'] = data[1]
             yield market
+
+        for item in response.css('#currency-table tbody tr'):
+            currency = Currency()
+            currency['title'] = '|'.join(item.xpath('th/text()').extract())
+            data = item.xpath('td//text()').extract()
+            currency['price'] = data[0]
+            currency['tolerance'] = data[1]
+            yield currency

@@ -31,3 +31,9 @@ class Market(Item):
     title = Field()
     indicator = Field()
     tolerance = Field()
+
+
+class Currency(Item):
+    title = Field()
+    price = Field()
+    tolerance = Field()
