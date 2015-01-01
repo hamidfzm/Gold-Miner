@@ -12,6 +12,8 @@ BOT_NAME = 'miner'
 
 SPIDER_MODULES = ['miner.spiders']
 NEWSPIDER_MODULE = 'miner.spiders'
+
+LOG_LEVEL = 'INFO'
 # COOKIES_ENABLED = False
 # RANDOMIZE_DOWNLOAD_DELAY = True
 
