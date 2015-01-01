@@ -1,4 +1,4 @@
-# import python
+__author__ = 'hamid'
 
 # import flask
 from flask import Flask
@@ -34,8 +34,8 @@ def configure_blueprints(app):
 
     blueprints = Config.INSTALLED_BLUEPRINTS
     for blueprint in blueprints:
-        bp = __import__('blueprints.%s' % blueprint, fromlist=[blueprint])
-        app.register_blueprint(getattr(bp, blueprint))
+        bp = __import__('app.blueprints.%s' % blueprint, fromlist=[blueprint])
+        app.register_blueprint(bp.mod)
 
 
 def configure_errorhandlers(app):
