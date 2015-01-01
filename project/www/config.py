@@ -29,6 +29,8 @@ class Config:
                         'HOST': '127.0.0.1',
                         'PORT': 27017}
 
+    INSTALLED_BLUEPRINTS = ['main']
+
     @staticmethod
     def init_app(app):
         pass
@@ -38,10 +40,5 @@ class DevelopmentConfig(Config):
     DEBUG = True
 
 
-class ProductionConfig(Config):
+class DeploymentConfig(Config):
     DEBUG = False
-
-
-config = {'development': DevelopmentConfig,
-          'production': ProductionConfig,
-          'default': DevelopmentConfig}
