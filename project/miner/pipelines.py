@@ -1,12 +1,13 @@
 # -*- coding: utf-8 -*-
 
 # python import
-from scrapy import signals
+from scrapy import signals, log
 from scrapy.contrib.exporter import JsonItemExporter
 from datetime import datetime
+import os
 
 # project import
-import items
+from items import tgju
 
 # Define your item pipelines here
 #
@@ -32,23 +33,28 @@ class tgjuPipeline(object):
         return pipeline
 
     def spider_opened(self, spider):
-        for key in get_items(items):
-            self.files[key] = open('temp/%s_%s_%s.json' % (spider.name,
-                                                           key.lower(),
-                                                           datetime.now().strftime('%Y%m%dT%H%M%S')),
+        for key in get_items(tgju):
+            path = os.path.join('temp', key)
+            if not os.path.exists(path):
+                os.makedirs(path)
+            self.files[key] = open(os.path.join(path,
+                                                '%s_%s_%s.json' % (spider.name,
+                                                                   key.lower(),
+                                                                   datetime.now().strftime('%Y%m%dT%H%M%S'))),
                                    'w+b')
 
             self.exporter[key] = JsonItemExporter(self.files[key])
             self.exporter[key].start_exporting()
 
     def spider_closed(self, spider):
-        for key in get_items(items):
+        for key in get_items(tgju):
             self.exporter[key].finish_exporting()
             self.files.pop(key).close()
 
     def process_item(self, item, spider):
 
         try:
+            log.msg('-----------------%s------------------' % item.__class__.__name__)
             self.exporter[item.__class__.__name__].export_item(item)
         except KeyError:
             pass
