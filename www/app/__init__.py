@@ -58,4 +58,6 @@ def configure_before_handlers(app):
 
 def configure_extentions(app):
     from app.extensions import db
+    import wtforms_json
     db.init_app(app)
+    wtforms_json.init()
