@@ -7,6 +7,7 @@ from flask import current_app, request, g
 # python imports
 from mongoengine import (Document, EmbeddedDocument, DoesNotExist, ValidationError,
                          StringField, DateTimeField, ReferenceField, BooleanField, ListField, EmbeddedDocumentField)
+from functools import wraps
 from hashlib import sha384
 from datetime import datetime
 from itsdangerous import (TimedJSONWebSignatureSerializer as Serializer, BadSignature, SignatureExpired)
@@ -54,10 +55,9 @@ class User(Document):
     roles = ListField(EmbeddedDocumentField(Role))
 
     def __init__(self, *args, **kwargs):
-            Document.__init__(self, *args, **kwargs)
-
-            if 'password' in kwargs:
-                self.password = kwargs['password']
+        super(User, self).__init__(*args, **kwargs)
+        if 'password' in kwargs:
+            self.password = kwargs['password']
 
     @property
     def password(self):
@@ -65,10 +65,7 @@ class User(Document):
 
     @password.setter
     def password(self, password):
-
-        # if self.__password was empty we will save password hexdigest
-        if not self.password_hash:
-            self.password_hash = sha384(password).hexdigest()
+        self.password_hash = sha384(password).hexdigest()
 
     def verify_password(self, password):
         return sha384(password).hexdigest() == self.password_hash
@@ -84,8 +81,9 @@ class User(Document):
         return s.dumps({'id': self.id})
 
     @staticmethod
-    def auth():
-        def decorator(f):
+    def auth(f):
+        @wraps(f)
+        def wrapper():
             s = Serializer(current_app.config['SECRET_KEY'], 3600)
             try:
                 data = s.loads(request.headers.get('token'))
@@ -95,7 +93,7 @@ class User(Document):
             # DoesNotExist is for when user doesn't exists and ValidationError is for when id is invalid
             except (BadSignature, SignatureExpired, ValidationError, DoesNotExist, KeyError, TypeError):
                 return "", 401
-        return decorator
+        return wrapper
 
     def add_roles(self, *roles):
         self.roles.extend([role for role in roles if role not in self.roles])
