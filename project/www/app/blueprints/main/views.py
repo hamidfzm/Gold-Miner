@@ -5,6 +5,6 @@ __author__ = 'hamid'
 from . import mod
 
 
-@mod.route('/')
+@mod.route('')
 def index():
     return 'hello'
