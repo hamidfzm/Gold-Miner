@@ -84,7 +84,7 @@ class User(Document):
         return s.dumps({'id': self.id})
 
     @staticmethod
-    def api_login_required():
+    def api_auth():
         def decorator(f):
             s = Serializer(current_app.config['SECRET_KEY'], 3600)
             try:
