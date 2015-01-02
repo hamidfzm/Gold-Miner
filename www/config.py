@@ -12,6 +12,7 @@ class Config:
         pass
 
     SECRET_KEY = os.environ.get('SECRET_KEY_MINER', 'Development')
+    WTF_CSRF_ENABLED = True
 
     FLASKY_MAIL_SUBJECT_PREFIX = '[Hamid FzM]'
     FLASKY_MAIL_SENDER = 'Hamid FzM <mail@hamidfzm.ir>'
