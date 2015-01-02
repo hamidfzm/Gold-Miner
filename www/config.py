@@ -31,7 +31,8 @@ class Config:
                         'PORT': 27017}
 
     INSTALLED_BLUEPRINTS = ['main',
-                            'user']
+                            'user',
+                            'data']
 
     @staticmethod
     def init_app(app):
