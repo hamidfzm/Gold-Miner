@@ -1,6 +1,7 @@
 __author__ = 'hamid'
 
-from wtforms import Form, StringField, PasswordField, validators
+from flask.ext.wtf import Form
+from wtforms import StringField, PasswordField, validators
 
 
 class Login(Form):
