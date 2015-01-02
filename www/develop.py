@@ -1,4 +1,6 @@
 #!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 # flaks import
 from flask.ext.script import Manager
 
@@ -16,6 +18,27 @@ def run():
     :run server on port 5000
     """
     app.run(host='0.0.0.0', port=5000, debug=True)
+
+
+@manager.command
+def dbc():
+    # project import
+    from mongoengine import DoesNotExist
+    from app.blueprints.user.models import Role
+    from app.blueprints.user.models import User
+
+    """ create full website admin """
+    try:
+        User.objects.get(username='admin')
+
+    except DoesNotExist:
+        admin_role = Role(name="admin", abilities=[])  # admin has all abilities!
+        User(username='admin',
+             name=u'مدیر کل',
+             password='0212526',
+             roles=[admin_role]).save()
+
+        app.logger.info("Admin user created!\nUsername: admin\nPassword: 0212526")
 
 
 @manager.command
