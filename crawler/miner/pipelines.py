@@ -8,6 +8,8 @@ import os
 
 # project import
 from items import tgju
+from pymongo import MongoClient
+
 
 # Define your item pipelines here
 #
@@ -20,7 +22,7 @@ def get_items(module):
     return (str(md[c].__name__) for c in md if (isinstance(md[c], type) and md[c].__module__ == module.__name__))
 
 
-class tgjuPipeline(object):
+class JsonPipeline(object):
     def __init__(self):
         self.files = dict()
         self.exporter = dict()
@@ -58,4 +60,28 @@ class tgjuPipeline(object):
             self.exporter[item.__class__.__name__].export_item(item)
         except KeyError:
             pass
+        return item
+
+
+class tgjuPipeline(object):
+    def __init__(self):
+        self.client = None
+        self.db = None
+
+    @classmethod
+    def from_crawler(cls, crawler):
+        pipeline = cls()
+        crawler.signals.connect(pipeline.spider_opened, signals.spider_opened)
+        crawler.signals.connect(pipeline.spider_closed, signals.spider_closed)
+        return pipeline
+
+    def spider_opened(self, spider):
+        self.client = MongoClient('localhost', 27017)
+        self.db = self.client.tgju
+
+    def spider_closed(self, spider):
+        self.client.close()
+
+    def process_item(self, item, spider):
+        self.db[item.__class__.__name__.lower()].update({'title': item['title']}, dict(item), True)
         return item
