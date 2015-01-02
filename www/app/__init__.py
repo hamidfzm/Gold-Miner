@@ -57,5 +57,5 @@ def configure_before_handlers(app):
 
 
 def configure_extentions(app):
-    from extensions import db
+    from app.extensions import db
     db.init_app(app)

@@ -4,4 +4,4 @@ from flask import Blueprint
 
 mod = Blueprint('main', __name__, url_prefix='/')
 
-from . import views
+from app.blueprints.main import views

@@ -3,6 +3,6 @@
 cd /home/hamid/Projects/gold-miner/
 source venv/bin/activate
 
-cd project/
+cd crawler/
 
 scrapy crawl tgju
