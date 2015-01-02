@@ -78,7 +78,7 @@ class User(Document):
 
     def generate_token(self, expiration=3600):
         s = Serializer(current_app.config['SECRET_KEY'], expires_in=expiration)
-        return s.dumps({'id': self.id})
+        return s.dumps({'id': str(self.id)})
 
     @staticmethod
     def auth(f):
