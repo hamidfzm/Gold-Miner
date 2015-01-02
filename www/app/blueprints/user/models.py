@@ -83,12 +83,12 @@ class User(Document):
     @staticmethod
     def auth(f):
         @wraps(f)
-        def wrapper():
+        def wrapper(*args, **kwargs):
             s = Serializer(current_app.config['SECRET_KEY'], 3600)
             try:
                 data = s.loads(request.headers.get('token'))
                 g.user = User.objects.get(id=data['id'])
-                return f
+                return f(*args, **kwargs)
             # BadSignature is invalid token, SignatureExpired is valid token, but expired
             # DoesNotExist is for when user doesn't exists and ValidationError is for when id is invalid
             except (BadSignature, SignatureExpired, ValidationError, DoesNotExist, KeyError, TypeError):
