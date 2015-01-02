@@ -2,7 +2,7 @@
 __author__ = 'hamid'
 
 # flask imports
-from flask import current_app, request, g, abort
+from flask import current_app, request, g
 
 # python imports
 from mongoengine import (Document, EmbeddedDocument, DoesNotExist, ValidationError,
@@ -84,7 +84,7 @@ class User(Document):
         return s.dumps({'id': self.id})
 
     @staticmethod
-    def api_auth():
+    def auth():
         def decorator(f):
             s = Serializer(current_app.config['SECRET_KEY'], 3600)
             try:
@@ -94,7 +94,7 @@ class User(Document):
             # BadSignature is invalid token, SignatureExpired is valid token, but expired
             # DoesNotExist is for when user doesn't exists and ValidationError is for when id is invalid
             except (BadSignature, SignatureExpired, ValidationError, DoesNotExist, KeyError, TypeError):
-                return abort(401, ['api'])
+                return "", 401
         return decorator
 
     def add_roles(self, *roles):
