@@ -16,3 +16,6 @@ log/
 # virtual envirments
 env/
 venv/
+
+# OS X Files
+*.DS_Store
